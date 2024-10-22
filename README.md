@@ -8,7 +8,7 @@ Deep neural networks are misguided by simple-to-craft, imperceptible adversarial
 1. Download our pre-trained models for evaluation:
    - [MNIST](https://drive.google.com/file/d/1wnuHtcC7wwnP6iH6LDRTkIOcZ2GD0NEt/view?usp=drive_link)
    - [CIFAR-10](https://drive.google.com/file/d/1u1gwsa2gf6ZZDmVFnvE9us0q5Zff-nb8/view?usp=drive_link)
-   - [STL-10](https://drive.google.com/file/d/1kTmJ6bZkjOW28szh0Ya9aIGP5-pbVhEc/view?usp=drive_link)
+   - [STL-10](https://drive.google.com/file/d/1GdCD8TWWsjJjsPWiQBlAB3y1Xw4Kejgf/view?usp=drive_link)
 2. Follow our Notebooks to load datasets and models for clean accuracy check
 
 ### ToDo
