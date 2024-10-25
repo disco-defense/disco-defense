@@ -156,34 +156,69 @@ class PretrainedModel():
 
         return out
 
-def load_model(dataset, num_particles):
-    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
-    if dataset == "cifar10":
-        NET = VGG("VGG16")
-        NET = torch.nn.DataParallel(NET)
-        
-    elif dataset == 'mnist':
-        NET = MNIST()
-        NET = torch.nn.DataParallel(NET)
-        
-    elif dataset == 'stl10':
-        NET = models.resnet18(pretrained=False)
-        NET.fc = torch.nn.Linear(in_features=512, out_features=10)
-        NET = torch.nn.DataParallel(NET)
-        
-    net = BayesWrap(NET,num_particles)
-    net = net.to(device)
-    if dataset == 'mnist':
-        model_path = './models/shared_final_trained_model/svgd-sample_loss-mnist-40particles-ckpt_best.pth' 
+def load_model(dataset, num_particles, device):
 
-    elif dataset == 'cifar10':
-        model_path = './models/shared_final_trained_model/svgd-sample_loss-cifar10-10particles-ckpt_best.pth'
+    # For single models
+    if num_particles == 1:
+        if dataset == 'mnist':
+            NET = MNIST()
+            net = torch.nn.DataParallel(NET)
         
-    elif dataset == 'stl10':
-        model_path = './models/shared_final_trained_model/svgd-sample_loss-stl10-10particles-ckpt_best.pth'  
+        elif dataset == "cifar10":
+            NET = VGG_dropout("VGG16")
+            net = torch.nn.DataParallel(NET)
+            
+        elif dataset == 'stl10':
+            NET = models.resnet18(pretrained=False)
+            NET.fc = torch.nn.Sequential(torch.nn.Linear(in_features=512, out_features=256),
+                                     torch.nn.ReLU(),
+                                     torch.nn.Dropout(),
+                                     torch.nn.Linear(in_features=256, out_features=10),
+                                    )
+            net = torch.nn.DataParallel(NET)
+            
+        net = net.to(device)
+        if dataset == 'mnist':
+            model_path = './models/single/single_model_mnist.pth' 
+
+        elif dataset == 'cifar10':
+            model_path = './models/single/single_model_vgg16_cifar10.pth'
+            
+        elif dataset == 'stl10':
+            model_path = './models/single/single_model_resnet18_stl10.pth'  
+            
+        checkpoint = torch.load(model_path, map_location='cuda:0')
+        net.load_state_dict(checkpoint["net"])
+
+    # For model sets
+    else:
+        if dataset == 'mnist':
+            NET = MNIST()
+            NET = torch.nn.DataParallel(NET)
         
-    checkpoint = torch.load(model_path)
-    net.load_state_dict(checkpoint["net"])
+        elif dataset == "cifar10":
+            NET = VGG("VGG16")
+            NET = torch.nn.DataParallel(NET)
+            
+        elif dataset == 'stl10':
+            NET = models.resnet18(pretrained=False)
+            NET.fc = torch.nn.Linear(in_features=512, out_features=10)
+            NET = torch.nn.DataParallel(NET)
+            
+        net = BayesWrap(NET,num_particles)
+        net = net.to(device)
+        if dataset == 'mnist':
+            model_path = './models/shared_final_trained_model/svgd-sample_loss-mnist-40particles-ckpt_best.pth' 
+
+        elif dataset == 'cifar10':
+            model_path = './models/shared_final_trained_model/svgd-sample_loss-cifar10-10particles-ckpt_best.pth'
+            
+        elif dataset == 'stl10':
+            model_path = './models/shared_final_trained_model/svgd-sample_loss-stl10-10particles-ckpt_best.pth'  
+            
+        checkpoint = torch.load(model_path)
+        net.load_state_dict(checkpoint["net"])
+
     net.eval()
     
     return net
