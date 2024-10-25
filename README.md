@@ -6,9 +6,9 @@ Deep neural networks are misguided by simple-to-craft, imperceptible adversarial
 
 ### Evaluate our models
 1. Download our _pre-trained_ __model sets__ using _SVGD+_ for evaluation:
-   - [MNIST](https://drive.google.com/file/d/1wnuHtcC7wwnP6iH6LDRTkIOcZ2GD0NEt/view?usp=drive_link)
-   - [CIFAR-10](https://drive.google.com/file/d/1u1gwsa2gf6ZZDmVFnvE9us0q5Zff-nb8/view?usp=drive_link)
-   - [STL-10](https://drive.google.com/file/d/1GdCD8TWWsjJjsPWiQBlAB3y1Xw4Kejgf/view?usp=drive_link)
+   - [MNIST](https://drive.google.com/file/d/1wnuHtcC7wwnP6iH6LDRTkIOcZ2GD0NEt/view?usp=drive_link)(40 models)
+   - [CIFAR-10](https://drive.google.com/file/d/1u1gwsa2gf6ZZDmVFnvE9us0q5Zff-nb8/view?usp=drive_link)(10 models)
+   - [STL-10](https://drive.google.com/file/d/1GdCD8TWWsjJjsPWiQBlAB3y1Xw4Kejgf/view?usp=drive_link)(10 models)
 2. Follow our Notebooks to load datasets and models for clean accuracy check
 3. Our _pre-trained_ __single models__:
    - [MNIST](https://drive.google.com/file/d/1nvDBn9WNS7fnKlnYv2wNdPiiHS-VIVIv/view?usp=drive_link)
